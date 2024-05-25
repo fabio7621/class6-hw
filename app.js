@@ -6,7 +6,7 @@ var cors = require("cors");
 var dotenv = require("dotenv");
 const indexRouter = require("./routes/index");
 const postRouter = require("./routes/posts");
-
+var usersRouter = require('./routes/users');
 const mongoose = require("mongoose");
 var app = express();
 dotenv.config({ path: "./config.env" });
@@ -24,8 +24,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/posts", postRouter);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/posts', postRouter);
+
 module.exports = app;
 
 // 404 錯誤
