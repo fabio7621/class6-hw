@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
 const postRouter = require("./routes/posts");
+const userRouter = require("./routes/users")
 
 dotenv.config({ path: "./config.env" });
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/posts", postRouter);
+app.use("/users", userRouter);
 module.exports = app;
 
 // 404 錯誤

@@ -1,15 +1,14 @@
 const express = require("express");
-const errorHandle = require("../errorHandle");
+const errorHandle = require("../service/handErrorAsync");
 const appError = require("../service/appError");
-const handleErrorAsync = require("../service/handErrorAsync");
 const router = express.Router();
 const Post = require("../models/postsModel");
 const User = require("../models/usersModel");
 
 router.get("/", async function (req, res, next) {
     try {
-        const timeSort = req.query.timeSort == "asc" ? "createdAt" : "-createdAt";
-        const q = req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {};
+        const timeSort = req.query.timeSort === "asc" ? "createdAt" : "-createdAt";
+        const q = req.query.q !== undefined ? { content: new RegExp(req.query.q, 'i') } : {};
         const posts = await Post.find(q)
             .populate({
                 path: "user",
@@ -22,11 +21,11 @@ router.get("/", async function (req, res, next) {
             posts,
         });
     } catch (error) {
-        errorHandle(res, error);
+        next(error);
     }
 });
 
-router.post("/", handleErrorAsync(async function (req, res, next) {
+router.post("/", errorHandle(async function (req, res, next) {
     if (!req.body.content || req.body.content.trim() === "") {
         return next(appError(400, "你沒有填寫 content 資料", next));
     }
@@ -45,7 +44,7 @@ router.delete("/posts", async (req, res, next) => {
             posts: [],
         });
     } catch (error) {
-        errorHandle(res, error);
+        next(error);
     }
 });
 
@@ -60,7 +59,7 @@ router.delete("/post/:id", async (req, res, next) => {
             post: post,
         });
     } catch (error) {
-        errorHandle(res, error);
+        next(error);
     }
 });
 
@@ -80,7 +79,7 @@ router.patch("/post/:id", async (req, res, next) => {
             post: updatedPost,
         });
     } catch (error) {
-        errorHandle(res, error);
+        next(error);
     }
 });
 
