@@ -1,86 +1,25 @@
 const express = require("express");
+const router = express.Router();
 const errorHandle = require("../service/handErrorAsync");
 const appError = require("../service/appError");
-const router = express.Router();
 const Post = require("../models/postsModel");
 const User = require("../models/usersModel");
+const postController = require("../controllers/postCon");
+const { getPosts, newPost, deleteAllPosts, deletePost, updatePost } = postController;
 
-router.get("/", async function (req, res, next) {
-    try {
-        const timeSort = req.query.timeSort === "asc" ? "createdAt" : "-createdAt";
-        const q = req.query.q !== undefined ? { content: new RegExp(req.query.q, 'i') } : {};
-        const posts = await Post.find(q)
-            .populate({
-                path: "user",
-                select: "user photo",
-            })
-            .sort(timeSort);
-        res.status(200).json({
-            success: true,
-            message: "搜尋成功",
-            posts,
-        });
-    } catch (error) {
-        next(error);
-    }
-});
+// 取得所有貼文
+router.get("/", getPosts);
 
-router.post("/", errorHandle(async function (req, res, next) {
-    if (!req.body.content || req.body.content.trim() === "") {
-        return next(appError(400, "你沒有填寫 content 資料", next));
-    }
-    const newPost = await Post.create({ ...req.body, content: req.body.content.trim() });
-    res.status(200).json({
-        status: "success",
-        post: newPost,
-    });
-}));
+// 建立新貼文
+router.post("/", newPost);
 
-router.delete("/posts", async (req, res, next) => {
-    try {
-        await Post.deleteMany({});
-        res.status(200).json({
-            status: "success",
-            posts: [],
-        });
-    } catch (error) {
-        next(error);
-    }
-});
+//刪除所有貼文
+router.delete("/posts", deleteAllPosts);
 
-router.delete("/post/:id", async (req, res, next) => {
-    try {
-        const post = await Post.findByIdAndDelete(req.params.id);
-        if (!post) {
-            return next(appError(404, "找不到貼文", next));
-        }
-        res.status(200).json({
-            status: "success",
-            post: post,
-        });
-    } catch (error) {
-        next(error);
-    }
-});
+// 删除指定貼文
+router.delete("/post/:id", deletePost);
 
-router.patch("/post/:id", async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const { body } = req;
-        if (body.content && body.content.trim() === "") {
-            return next(appError(400, "content 不能為空白", next));
-        }
-        const updatedPost = await Post.findByIdAndUpdate(id, { ...body, content: body.content.trim() }, { new: true });
-        if (!updatedPost) {
-            return next(appError(404, "找不到貼文", next));
-        }
-        res.status(200).json({
-            status: "success",
-            post: updatedPost,
-        });
-    } catch (error) {
-        next(error);
-    }
-});
+// 更新指定貼文
+router.patch("/post/:id", updatePost);
 
 module.exports = router;
