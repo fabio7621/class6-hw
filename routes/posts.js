@@ -1,25 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const errorHandle = require("../service/handErrorAsync");
-const appError = require("../service/appError");
-const Post = require("../models/postsModel");
-const User = require("../models/usersModel");
 const postController = require("../controllers/postCon");
-const { getPosts, newPost, deleteAllPosts, deletePost, updatePost } = postController;
+const { isAuth } = require("../service/auth");
+const { getPosts, getOnePost, newPost, deleteAllPosts, deletePost, updatePost } = postController;
 
 // 取得所有貼文
 router.get("/", getPosts);
 
+// 取得單篇貼文
+router.get("/:id", getOnePost);
+
 // 建立新貼文
-router.post("/", newPost);
+router.post("/", isAuth, newPost);
 
 //刪除所有貼文
-router.delete("/posts", deleteAllPosts);
+router.delete("/posts", isAuth, deleteAllPosts);
 
 // 删除指定貼文
-router.delete("/post/:id", deletePost);
+router.delete("/post/:id", isAuth, deletePost);
 
 // 更新指定貼文
-router.patch("/post/:id", updatePost);
+router.patch("/post/:id", isAuth, updatePost);
 
 module.exports = router;

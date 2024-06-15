@@ -15,7 +15,7 @@ module.exports = {
 			.sort(timeSort);
 
 		if (!posts) {
-			return next(appError(404, "未找到帖子", next));
+			return next(appError(404, "未找到貼文", next));
 		}
 
 		res.status(200).json({
@@ -25,6 +25,24 @@ module.exports = {
 		});
 	}),
 
+	getOnePost: errorHandle(async (req, res, next) => {
+		const postId = req.params.id;
+
+		const post = await Post.findById(postId).populate({
+			path: "user",
+			select: "user photo",
+		});
+
+		if (!post) {
+			return next(appError(404, "未找到貼文"));
+		}
+
+		res.status(200).json({
+			success: true,
+			message: "成功取的貼文",
+			post,
+		});
+	}),
 	newPost: errorHandle(async (req, res, next) => {
 		if (!req.body.content || req.body.content.trim() === "") {
 			return next(appError(400, "你沒有填寫 content 資料", next));
