@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "e25d7b5b-bb57-444d-9458-d1c099a34ddd",
+		"name": "class6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30002651"
+	},
+	"item": [
+		{
+			"name": "sign_up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Joyce\",\n    \"email\":\"Joyce123@gmail.com\",\n    \"photo\":\"https://picsum.photos/200/300\",\n    \"sex\":\"male\",\n    \"password\":\"Joyce7777\",\n    \"confirmPassword\":\"Joyce7777\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://class6-hw.onrender.com/users/sign_up",
+					"protocol": "https",
+					"host": [
+						"class6-hw",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"users",
+						"sign_up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \n    \"email\":\"job123@gmail.com\",\n    \"password\":\"test7777\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/users/sign_in",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"sign_in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取得會員資料",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmQ3MzJiODMyNjNmM2E1M2ZhZTc4ZCIsImlhdCI6MTcxODQ0OTAzMiwiZXhwIjoxNzE5MDUzODMyfQ.ZSSXQtK-5ynEy25W_RIXFY8ySaU5sKU44tGcyajDWgI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/users/profile/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"profile",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "更新會員資料",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmQ3MzJiODMyNjNmM2E1M2ZhZTc4ZCIsImlhdCI6MTcxODQ0OTM5OSwiZXhwIjoxNzE5MDU0MTk5fQ.aBlfIwcIPZkosbjDSt0yo6BdHKewrRiN8sJAdgavq6U",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\":\"Joyce9999\",\n    \"confirmPassword\":\"Joyce9999\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://class6-hw.onrender.com/users/updatePassword",
+					"protocol": "https",
+					"host": [
+						"class6-hw",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"users",
+						"updatePassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "編輯會員資料",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmQ3MzJiODMyNjNmM2E1M2ZhZTc4ZCIsImlhdCI6MTcxODQ1MDM3NCwiZXhwIjoxNzE5MDU1MTc0fQ.F2Ll__O6OzLtkpThjeL6vTzsNfaEMPCJxVT23-NZ_LU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Joyce2\",\n    \"sex\":\"female\",\n    \"photo\":\"https://picsum.photos/600/600\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://class6-hw.onrender.com/users/updateProfile",
+					"protocol": "https",
+					"host": [
+						"class6-hw",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"users",
+						"updateProfile"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
